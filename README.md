@@ -17,7 +17,7 @@ A web application that analyzes skin conditions using AI vision models through t
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/oseiagm/skinkare
+git clone https://github.com/oseiagm/skinkare.git
 cd skinkare
 ```
 
