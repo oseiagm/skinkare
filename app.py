@@ -26,7 +26,7 @@ def analyze_skin_condition(image):
         2. Common remedies or treatments
 
         What skin condition do you observe in this image?
-        Make your answer a single comprehensive paragraph.
+        Structure your response in a single detailed paragraph that's suitable for Text-to-Speech conversion.
         """
 
         # Prepare the API request
