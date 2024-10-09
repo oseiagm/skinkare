@@ -60,6 +60,7 @@ def results():
 @app.route('/analyze', methods=['POST'])
 def analyze_image():
     file = request.files['image']
+    print(file)
     image = Image.open(file)
 
     # Encode the image to base64
@@ -91,6 +92,7 @@ def analyze_image():
         "analysis": analysis,
         "imageBase64": image_base64
     }
+    print(analysis)
     return jsonify(response_data)
 
 if __name__ == "__main__":
