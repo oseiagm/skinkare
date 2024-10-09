@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Skin Condition Analyzer</title>
+</head>
+<body>
+    <header>
+        <h1>🔍 Skin Condition Analyzer</h1>
+    </header>
+    <div class="container">
+        <h2>Upload a photo of your skin condition for analysis</h2>
+        <input type="file" id="fileInput" accept="image/*" required>
+        <button onclick="analyzeImage()">Analyze Image</button>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Skin Condition Analyzer</title>
+</head>
+<body>
+    <header role="banner">
+        <h1>🔍 Skin Condition Analyzer</h1>
+    </header>
+    <main role="main" class="container">
+        <h2>Upload a photo of your skin condition for analysis</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label for="fileInput" class="sr-only">Choose an image file</label>
+            <input type="file" id="fileInput" name="image" accept="image/*" required aria-describedby="fileHint">
+            <p id="fileHint" class="hint">Accepted formats: JPG, PNG, GIF</p>
+            <button type="submit" onclick="analyzeImage()" aria-label="Analyze uploaded image">Analyze Image</button>
+        </form>
+        <div id="feedback" aria-live="polite"></div>
+        <div id="loading" aria-live="polite" hidden>Analyzing image...</div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Skin Condition Analyzer. All rights reserved.</p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> -->

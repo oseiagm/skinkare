@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinKare - History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-900 bg-opacity-55 h-screen flex items-center justify-center">
+    <div class="container mx-auto px-4 md:px-20 h-auto flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-lg p-10 w-full max-w-4xl h-[80vh] flex flex-col">
+            <header class="mb-6 text-center">
+                <h1 class="text-5xl font-bold md:text-5xl text-black tracking-wide">
+                    Skin<span class="text-blue-900 italic">Kare</span>
+                </h1>
+                <p class="text-lg italic text-gray-600">with your AI physician</p>
+            </header>
+
+            <section class="mt-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">History</h2>
+
+                <div class="overflow-y-auto h-[40vh] lg:h-[40vh] border border-gray-200 rounded-lg p-2">
+                    <table class="table-auto w-full border-collapse border-spacing-y-4 table-fixed">
+                        <thead class="sticky top-0 bg-white z-10">
+                            <tr>
+                                <th class="text-left py-4 px-6 text-gray-700">Diagnosis</th>
+                                <th class="text-left py-4 px-6 text-gray-700">Treatment Plan</th>
+                                <th class="text-left py-4 px-6 text-gray-700">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <!-- Rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+                <a href="index.html" class="flex justify-end mt-2 text-blue-900 font-semibold hover:underline">Go back to home page</a>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Fetch data from the Flask API
+        async function fetchHistory() {
+            try {
+                const response = await fetch('http://your-flask-api-url/history'); // Replace with your actual API URL
+                const data = await response.json();
+
+                const historyTableBody = document.getElementById('historyTableBody');
+
+                // Clear the table body before adding new rows
+                historyTableBody.innerHTML = '';
+
+                // Populate the table with the fetched data
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.classList.add('bg-blue-900', 'bg-opacity-10');
+
+                    row.innerHTML = `
+                        <td class="py-4 px-6 text-gray-800 break-words">${item.diagnosis}</td>
+                        <td class="py-4 px-6 text-gray-800 break-words">${item.treatment_plan}</td>
+                        <td class="py-4 px-6 text-gray-800 break-words">${item.date}</td>
+                    `;
+
+                    historyTableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // Call the fetchHistory function on page load
+        window.onload = fetchHistory;
+    </script>
+</body>
+</html>

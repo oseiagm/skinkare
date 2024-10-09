@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinKare - Diagnosis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-900 bg-opacity-55 h-screen flex items-center justify-center">
+    <div class="container mx-auto px-4 md:px-20 h-auto flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-lg p-6 md:p-10 w-full max-w-4xl h-auto md:h-[80vh] flex flex-col justify-between">
+            <header class="mb-4 md:mb-6 text-center">
+                <h1 class="text-3xl md:text-5xl font-bold text-black tracking-wide">
+                    Skin<span class="text-blue-900 italic">Kare</span>
+                </h1>
+                <p class="text-sm md:text-lg italic text-gray-600">with your AI physician</p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start justify-center flex-grow">
+                <div class="flex flex-col items-start">
+                    <div class="w-full h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
+                        <!-- Use Jinja2 to insert the image URL -->
+                        <img src="{{ image_url }}" alt="Diagnosis Image" class="object-contain h-full w-full rounded-lg">
+                    </div>
+                    <div class="w-full bg-gray-100 p-4 rounded-lg shadow-sm">
+                        <h2 class="text-xl font-semibold text-gray-800">Diagnosis</h2>
+                        <!-- Use Jinja2 to insert the diagnosis summary -->
+                        <p class="text-gray-600 mt-2">{{ diagnosis_summary }}</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col justify-between">
+                    <div class="mb-6">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4">Detailed Information</h2>
+                        <!-- Use Jinja2 to insert the detailed information -->
+                        <p class="text-gray-600 leading-relaxed">{{ detailed_information }}</p>
+                    </div>
+
+                    <div class="mt-4">
+                        <!-- Use Jinja2 to insert the audio URL -->
+                        <audio controls class="w-full bg-blue-900 p-3 rounded-full">
+                            <source src="{{ audio_url }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+
+            <a href="index.html" class="flex justify-end mt-2 text-blue-900 font-semibold hover:underline">Go back to home page</a>
+        </div>
+    </div>
+</body>
+</html>

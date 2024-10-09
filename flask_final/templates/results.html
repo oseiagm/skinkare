@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Analysis Results</title>
+</head>
+<body>
+    <header>
+        <h1>Analysis Results</h1>
+    </header>
+    <div class="container">
+        <div id="result-container"></div>
+        <a href="/">Back to Upload</a>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
