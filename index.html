@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinKare - Diagnosis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-900 bg-opacity-55 h-screen flex items-center justify-center">
+    <!-- Container for the main content -->
+    <div class="container mx-auto px-4 md:px-20 h-auto flex items-center justify-center">
+        <!-- Central white box with rounded corners -->
+        <div class="bg-white rounded-lg shadow-lg p-10 w-full max-w-4xl text-center">
+            <!-- Header Section -->
+            <header class="mb-2">
+                <h1 class="text-4xl md:text-5xl font-bold text-black tracking-wide">
+                    Skin<span class="text-blue-900 italic">Kare</span>
+                </h1>
+                <p class="text-base md:text-lg italic text-gray-600 mb-10">with your AI physician</p>
+            </header>
+            <!-- Upload section with drag-and-drop functionality -->
+            <div class="flex flex-col items-center space-y-8">
+                <div class="flex flex-col w-full max-w-lg space-y-4">
+                    <form action="diagnosisPage.html"  method="get" >
+                        <div class="col-span-full">
+                            <!-- Drop area for drag-and-drop -->
+                            <div id="drop-area" class="border border-dashed border-gray-900/25 flex flex-col items-center justify-center py-10 px-6 rounded-lg cursor-pointer ">
+                                <div id="preview-container" class="text-center">
+                                    <svg id="icon" class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
+                                    </svg>
+                                    <div class="mt-4 flex text-sm leading-6 text-gray-600">
+                                    <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                                        <span>Choose a file</span>
+                                        <input id="file-upload" name="file-upload" type="file" class="sr-only" accept="image/*">
+                                    </label>
+                                    <p class="pl-1">or drag and drop</p>
+                                    </div>
+                                    <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                                </div>
+                                <!-- Image preview container -->
+                                <div id="file-preview" class="mt-4 hidden ">
+                                    <img id="preview-image" class="max-w-full h-auto rounded-lg shadow-md" alt="Image Preview">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Upload button -->
+                        <button class="bg-blue-900 text-white mt-5 py-2 w-full rounded" type="submit">
+                           Upload Image 
+                        </button>
+                    </form>
+                    <a href="historyPage.html"><button class="bg-blue-900 text-white py-2 w-full rounded" type="submit">
+                        Check History
+                    </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  drag-and-drop and file preview -->
+    <script>
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('file-upload');
+        const filePreview = document.getElementById('file-preview');
+        const previewImage = document.getElementById('preview-image');
+        const icon = document.getElementById('icon');
+        const previewContainer = document.getElementById('preview-container');
+        // Function to handle file preview
+        function showFilePreview(file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                // Show image preview
+                previewImage.src = event.target.result;
+                filePreview.classList.remove('hidden');
+                previewContainer.classList.add('hidden'); // Hide icon and instructions
+            };
+            reader.readAsDataURL(file);
+        }
+        // Handle file input change
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) showFilePreview(file);
+        });
+        // Drag and drop functionality
+        dropArea.addEventListener('dragover', function(event) {
+            event.preventDefault();
+            dropArea.classList.add('border-blue-600');
+        });
+        dropArea.addEventListener('dragleave', function() {
+            dropArea.classList.remove('border-blue-600');
+        });
+        dropArea.addEventListener('drop', function(event) {
+            event.preventDefault();
+            dropArea.classList.remove('border-blue-600');
+            const file = event.dataTransfer.files[0];
+            if (file) {
+                fileInput.files = event.dataTransfer.files;
+                showFilePreview(file);
+            }
+        });
+        // Handle click on label to trigger file input
+        dropArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
