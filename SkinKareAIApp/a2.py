@@ -22,8 +22,8 @@ def encode_image_to_base64(image):
     img_str = base64.b64encode(buffered.getvalue()).decode()
     return f"data:image/jpeg;base64,{img_str}"
 
-# Function to call OpenRouter API
 def call_openrouter_api(image_base64, prompt):
+    """Call OpenRouter API to analyze the skin image."""
     url = "https://openrouter.ai/api/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {app.config['OPENROUTER_API_KEY']}",
@@ -44,29 +44,20 @@ def call_openrouter_api(image_base64, prompt):
 
     try:
         response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()
-        return response.json()
+        response.raise_for_status()  # Raises an error for 4xx or 5xx responses
+        return response.json()  # Returns JSON response directly
     except requests.exceptions.HTTPError as http_err:
         return {"error": f"HTTP error occurred: {http_err}"}
     except Exception as e:
         return {"error": f"An error occurred: {str(e)}"}
 
-# Function to save analysis in the database
-def save_analysis(diagnosis, treatment, date):
-    conn = sqlite3.connect('skin_kare.db')
-    cursor = conn.cursor()
-    
-    cursor.execute(
-        'INSERT INTO analyses (diagnosis, treatment, date) VALUES (?, ?, ?)',
-        (diagnosis, treatment, date)
-    )
-    
-    conn.commit()
-    conn.close()
-
 @app.route('/')
 def index():
     return render_template('index.html')
+
+# @app.route('/history')
+# def history():
+#     return render_template('historyPage.html')
 
 @app.route('/history')
 def history():
@@ -75,9 +66,11 @@ def history():
 
     cursor.execute('SELECT diagnosis, treatment, date FROM analyses')
     analyses = cursor.fetchall()
+
     conn.close()
 
     return render_template('historyPage.html', analyses=analyses)
+
 
 @app.route('/results')
 def results():
@@ -86,6 +79,7 @@ def results():
 @app.route('/analyze', methods=['POST'])
 def analyze_image():
     file = request.files['image']
+    print(file)
     image = Image.open(file)
 
     # Encode the image to base64
@@ -105,28 +99,46 @@ def analyze_image():
     # Call the OpenRouter API
     result = call_openrouter_api(image_base64, prompt)
 
+    # Process the result and return the response
     if "error" in result:
         return jsonify({"error": result["error"]}), 500
-
-    # Extract the analysis from the API response
+    
+    # Extract the analysis from the result
     analysis = result['choices'][0]['message']['content']
+
     condition_name = analysis.split('.')[0]
-
-    # Extract treatment (you can improve this extraction logic)
-    treatment = "Moisturizers and corticosteroid creams"  # Placeholder
-    date = datetime.now().strftime('%m/%d/%Y')
-
-    # Save the analysis in the database
-    save_analysis(condition_name, treatment, date)
 
     # Create a response dictionary
     response_data = {
+        #"condition": "Skin Condition Observed",  # You can adjust this based on the analysis content
         "condition": condition_name,
         "analysis": analysis,
         "imageBase64": image_base64
     }
-
+    print(analysis)
     return jsonify(response_data)
+
+    def save_analysis(diagnosis, treatment, date):
+    conn = sqlite3.connect('skin_kare.db')
+    cursor = conn.cursor()
+    
+    cursor.execute(
+        'INSERT INTO analyses (diagnosis, treatment, date) VALUES (?, ?, ?)',
+        (diagnosis, treatment, date)
+    )
+    
+    conn.commit()
+    conn.close()
+
+     # Extract diagnosis and treatment (assuming content follows a specific format)
+    diagnosis = "Eczema"  # Replace with logic to extract from analysis
+    treatment = "Moisturizers and corticosteroid creams"
+    date = datetime.now().strftime('%m/%d/%Y')
+
+    # Save the analysis in the database
+    save_analysis(diagnosis, treatment, date)
+
+    return jsonify({"message": "Analysis saved successfully"})
 
 if __name__ == "__main__":
     app.run(debug=True)

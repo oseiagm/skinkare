@@ -29,7 +29,7 @@
     <title>SkinKare - Results</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-gray-100 h-screen flex  items-center justify-center">
+  <body class="bg-gray-100 h-screen flex items-center justify-center">
     <!-- <div class="bg-white p-8 rounded-lg shadow-lg w-3/4 max-w-2xl text-center">
       <h1 class="text-3xl font-bold mb-4">Analysis Result</h1> -->
       <div id="result-container"></div>
@@ -76,21 +76,12 @@ if (window.location.pathname.includes("results")) { // Check page URL
                         <!-- Placeholder for the image -->
                         
                         <img src="${imageBase64}" alt="Analyzed Image" class="object-contain h-full w-full rounded-lg">
-                    </div> <br> 
-
-                    <div class="w-full bg-gray-100 p-4 rounded-lg shadow-sm">
-                        <h2 class="text-xl font-semibold text-gray-800">Name of Skin Condition</h2>
-                        <p class="text-gray-600 mt-2"> ${condition}</p>
-                    </div> <br>
-
-                    <div class="w-full bg-gray-100 p-4 rounded-lg shadow-sm">
-                       <audio controls class="w-full bg-blue-900 p-3 rounded-full">
-                            <source src="wowowowowowowow-103214.mp3" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
                     </div>
-                    <br> 
-                    <a  href="/" class="flex justify-end mt-2 text-blue-900 font-semibold hover:underline">Go back to home page</a>
+                    <!-- Diagnosis summary -->
+                    <div class="w-full bg-gray-100 p-4 rounded-lg shadow-sm">
+                        <h2 class="text-xl font-semibold text-gray-800">Diagnosis</h2>
+                        <p class="text-gray-600 mt-2">Eczema - A common skin condition causing inflammation and irritation.</p>
+                    </div>
                 </div>
 
                 <!-- Right Section: Detailed Diagnosis and Audio Player -->
@@ -103,12 +94,18 @@ if (window.location.pathname.includes("results")) { // Check page URL
                         </p>
                     </div>
 
-                    
+                    <!-- Audio Player -->
+                    <div class="mt-4">
+                        <audio controls class="w-full bg-blue-900 p-3 rounded-full">
+                            <source src="wowowowowowowow-103214.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
                 </div>
             </div>
 
             
-            
+            <a  href="index.html" class="flex justify-end mt-2 text-blue-900 font-semibold hover:underline">Go back to home page</a>
         </div>
     </div>
 
