@@ -53,6 +53,11 @@ def call_openrouter_api(image_base64, prompt):
 def index():
     return render_template('index.html')
 
+@app.route('/history')
+def history():
+    return render_template('historyPage.html')
+
+
 @app.route('/results')
 def results():
     return render_template('results.html')

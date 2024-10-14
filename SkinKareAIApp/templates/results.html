@@ -33,7 +33,7 @@
     <div class="bg-white p-8 rounded-lg shadow-lg w-3/4 max-w-2xl text-center">
       <h1 class="text-3xl font-bold mb-4">Analysis Result</h1>
       <div id="result-container"></div>
-      <a href="index.html">
+      <a href="/">
         <button class="mt-4 bg-blue-900 text-white py-2 px-4 rounded">Back to Home</button>
       </a>
     </div>
@@ -49,11 +49,34 @@ if (window.location.pathname.includes("results")) { // Check page URL
     if (analysisResult) {
         const { condition, analysis, imageBase64 } = analysisResult;
 
+        // const resultHTML = `
+        //     <h2 >Condition: ${condition}</h2>
+        //     <p>Analysis: ${analysis}</p>
+        //     <img src="${imageBase64}" alt="Analyzed Image">
+        // `;
+
         const resultHTML = `
-            <h2>Condition: ${condition}</h2>
-            <p>Analysis: ${analysis}</p>
-            <img src="${imageBase64}" alt="Analyzed Image">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start justify-center flex-grow">
+                <!-- Left Section: Diagnosis Image and Summary -->
+                <div class="flex flex-col items-start">
+                    <div class="w-full h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
+                        <!-- Placeholder for the image -->
+                        <img src="${imageBase64}" alt="Analyzed Image" class="object-contain h-full w-full rounded-lg">
+                        
+                    </div>
+                    <!-- Diagnosis summary -->
+                    <div class="w-full bg-gray-100 p-4 rounded-lg shadow-sm">
+                        <h2 class="text-xl font-semibold text-gray-800">Diagnosis</h2>
+                        <p class="text-gray-600 mt-2">Analysis: ${analysis}</p>
+                    </div>
+                </div>
+
+        
         `;
+
+
+
+
         resultContainer.innerHTML = resultHTML;
     } else {
         resultContainer.innerHTML = `<p>No analysis result found.</p>`;
