@@ -9,20 +9,18 @@ from datetime import datetime
 import sqlite3
 
 from dotenv import load_dotenv
-load_dotenv()  # Load environment variables from .env
+load_dotenv()  
 
-# Load the configuration
 app = Flask(__name__)
-app.config.from_object('config.Config')  # Load the config from config.py
+app.config.from_object('config.Config')  
 
-# Function to encode image to base64
+
 def encode_image_to_base64(image):
     buffered = io.BytesIO()
     image.save(buffered, format="JPEG")
     img_str = base64.b64encode(buffered.getvalue()).decode()
     return f"data:image/jpeg;base64,{img_str}"
 
-# Function to call OpenRouter API
 def call_openrouter_api(image_base64, prompt):
     url = "https://openrouter.ai/api/v1/chat/completions"
     headers = {
@@ -88,10 +86,10 @@ def analyze_image():
     file = request.files['image']
     image = Image.open(file)
 
-    # Encode the image to base64
+   
     image_base64 = encode_image_to_base64(image)
 
-    # Prepare the prompt for the OpenRouter API
+    
     prompt = """You are a professional dermatologist and a skin care specialist.
     Analyze this skin image and provide:
     1. The name of the skin condition
@@ -102,24 +100,24 @@ def analyze_image():
     Structure your response in a single detailed paragraph that's suitable for Text-to-Speech conversion.
     """
 
-    # Call the OpenRouter API
+   
     result = call_openrouter_api(image_base64, prompt)
 
     if "error" in result:
         return jsonify({"error": result["error"]}), 500
 
-    # Extract the analysis from the API response
+   
     analysis = result['choices'][0]['message']['content']
     condition_name = analysis.split('.')[0]
 
-    # Extract treatment (you can improve this extraction logic)
-    treatment = "Moisturizers and corticosteroid creams"  # Placeholder
+   
+    treatment = "Moisturizers and corticosteroid creams"  
     date = datetime.now().strftime('%m/%d/%Y')
 
-    # Save the analysis in the database
+    
     save_analysis(condition_name, treatment, date)
 
-    # Create a response dictionary
+    
     response_data = {
         "condition": condition_name,
         "analysis": analysis,
