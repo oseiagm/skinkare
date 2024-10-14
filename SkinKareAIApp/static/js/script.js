@@ -1,3 +1,48 @@
+const dropArea = document.getElementById('drop-area');
+const fileInput = document.getElementById('file-upload');
+const filePreview = document.getElementById('file-preview');
+const previewImage = document.getElementById('preview-image');
+const previewContainer = document.getElementById('preview-container');
+
+function showFilePreview(file) {
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    previewImage.src = event.target.result;
+    filePreview.classList.remove('hidden');
+    previewContainer.classList.add('hidden');
+  };
+  reader.readAsDataURL(file);
+}
+
+fileInput.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  if (file) showFilePreview(file);
+});
+
+dropArea.addEventListener('dragover', (event) => {
+  event.preventDefault();
+  dropArea.classList.add('border-blue-600');
+});
+
+dropArea.addEventListener('dragleave', () => {
+  dropArea.classList.remove('border-blue-600');
+});
+
+dropArea.addEventListener('drop', (event) => {
+  event.preventDefault();
+  dropArea.classList.remove('border-blue-600');
+  const file = event.dataTransfer.files[0];
+  if (file) {
+    fileInput.files = event.dataTransfer.files;
+    showFilePreview(file);
+  }
+});
+
+dropArea.addEventListener('click', () => fileInput.click());
+
+
+
+
 function analyzeImage() {
     const fileInput = document.getElementById("fileInput");
     const formData = new FormData();
