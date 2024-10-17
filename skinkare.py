@@ -29,7 +29,7 @@ def is_skin_image(image):
     avg_color = np.mean(img_array, axis=(0, 1))
     
     # Define a range of skin-like colors in RGB
-    skin_lower = np.array([120, 80, 60])  # Adjust these values as needed
+    skin_lower = np.array([80, 60, 40])  # Adjust these values as needed
     skin_upper = np.array([240, 200, 180])  # Adjust these values as needed
     
     # Check if the average color falls within the skin color range
@@ -111,7 +111,6 @@ def check_configuration():
         return False
 
 def main():
-    
     st.set_page_config(layout="wide")
     st.subheader("🔍 Skin Condition Analyzer")
     
@@ -119,7 +118,7 @@ def main():
         return
     
     st.markdown("""
-        Upload a photo of your skin condition for analysis.
+        Upload a photo or take a picture of your skin condition for analysis.
         Please ensure the image is clear and well-lit for the best results.
         
         ⚠️ **Disclaimer**: This tool is for educational purposes only and should not replace professional medical advice.
@@ -129,15 +128,25 @@ def main():
     if 'analysis_history' not in st.session_state:
         st.session_state.analysis_history = []
     
-    # File uploader
-    uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png'])
+    # Create tabs for different input methods
+    tab1, tab2 = st.tabs(["Upload Image", "Take Photo"])
     
-    col1, col2 = st.columns(2)
-    
-    if uploaded_file is not None:
-        with col1:
-            st.subheader("Uploaded Image")
+    with tab1:
+        uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png'])
+        if uploaded_file is not None:
             image = Image.open(uploaded_file)
+    
+    with tab2:
+        camera_image = st.camera_input("Take a picture")
+        if camera_image is not None:
+            image = Image.open(camera_image)
+    
+    # Process the image if it's available from either source
+    if 'image' in locals():
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.subheader("Image")
             st.image(image, use_column_width=True)
             
             if st.button("Analyze Image"):
@@ -160,7 +169,7 @@ def main():
                     else:
                         with col2:
                             st.subheader("Image Validation")
-                            st.warning("The uploaded image doesn't appear to be a skin image. Please upload a clear image of the skin condition you want to analyze.")
+                            st.warning("The image doesn't appear to be a skin image. Please upload or capture a clear image of the skin condition you want to analyze.")
     
     # Display history
     if st.session_state.analysis_history:
