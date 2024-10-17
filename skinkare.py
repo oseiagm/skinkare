@@ -147,7 +147,7 @@ def main():
                         analysis_result = analyze_skin_condition(image)
                         
                         if analysis_result:
-                            # Save to history
+                            # Save to historys
                             st.session_state.analysis_history.append({
                                 'timestamp': datetime.now(),
                                 'image': image,
