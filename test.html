@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skin Condition Analyzer - SkinKare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-blue-900 bg-opacity-55 h-screen flex items-center justify-center">
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 md:px-20 h-auto flex items-center justify-center">
+      <div class="bg-white rounded-lg shadow-lg p-10 w-full max-w-3xl text-center">
+        <!-- Header Section -->
+        <header class="mb-4">
+          <h1 class="text-5xl font-bold text-black tracking-wide">
+            Welcome to <span class="text-blue-900 italic">SkinKare</span>
+          </h1>
+          <p class="text-lg italic text-gray-600 mt-2">
+            Your AI-powered solution for skin analysis
+          </p>
+        </header>
+
+        <!-- Buttons Section -->
+        <div class="mt-8 flex flex-col items-center space-y-4">
+          <a href="/login" class="w-full">
+            <button class="bg-blue-900 text-white py-2 w-full rounded-lg hover:bg-blue-800 transition">
+              Login
+            </button>
+          </a>
+          <a href="/signup" class="w-full">
+            <button class="bg-gray-700 text-white py-2 w-full rounded-lg hover:bg-gray-600 transition">
+              Sign Up
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
