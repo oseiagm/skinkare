@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 import base64
 import requests
 from PIL import Image
@@ -35,6 +35,31 @@ def index():
 @app.route('/results')
 def result():
     return render_template('results.html')
+
+@app.route('/history')
+def history():
+    # Connect to SQLite database and fetch all analyses
+    conn = sqlite3.connect('skin_kare.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT diagnosis, treatment, date FROM analyses ORDER BY date DESC')
+    analyses = cursor.fetchall()
+    conn.close()
+
+    # Pass data to the template
+    return render_template('historyPage.html', analyses=analyses)
+
+@app.route('/clear_history', methods=['POST'])
+def clear_history():
+    # Connect to the SQLite database and delete all entries
+    conn = sqlite3.connect('skin_kare.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM analyses')
+    conn.commit()
+    conn.close()
+
+    # Redirect back to the history page after clearing
+    return redirect(url_for('history'))
+
 
 @app.route('/analyze', methods=['POST'])
 def analyze_image():

@@ -18,6 +18,7 @@
 
             <section class="mt-8">
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4">History</h2>
+                
                 <div class="overflow-y-auto h-[40vh] lg:h-[40vh] border border-gray-200 rounded-lg p-2">
                     <table class="table-auto w-full border-collapse border-spacing-y-4 table-fixed">
                         <thead class="sticky top-0 bg-white z-10">
@@ -28,20 +29,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for diagnosis, treatment, date in analyses %}
-                            <tr class="bg-blue-900 bg-opacity-10">
-                                <td class="py-4 px-6 text-gray-800 break-words">{{ diagnosis }}</td>
-                                <td class="py-4 px-6 text-gray-800 break-words">{{ treatment }}</td>
-                                <td class="py-4 px-6 text-gray-800 break-words">{{ date }}</td>
-                            </tr>
-                            <tr class="h-4"></tr>
-                            {% endfor %}
+                            {% if analyses %}
+                                {% for diagnosis, treatment, date in analyses %}
+                                <tr class="bg-blue-900 bg-opacity-10">
+                                    <td class="py-4 px-6 text-gray-800 break-words">{{ diagnosis }}</td>
+                                    <td class="py-4 px-6 text-gray-800 break-words">{{ treatment }}</td>
+                                    <td class="py-4 px-6 text-gray-800 break-words">{{ date }}</td>
+                                </tr>
+                                <tr class="h-4"></tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="3" class="text-center py-4 text-gray-600">No history available</td>
+                                </tr>
+                            {% endif %}
                         </tbody>
                     </table>
                 </div>
+            
+                <!-- Clear History Button -->
+                <div class="flex justify-end mt-4">
+                    <form action="/clear_history" method="POST">
+                        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                            Clear History
+                        </button>
+                    </form>
+                </div>
+            
                 <a href="/" class="flex justify-end mt-2 text-blue-900 font-semibold hover:underline">Go back to homepage</a>
             </section>
+            
         </div>
     </div>
+
+    
 </body>
 </html>
